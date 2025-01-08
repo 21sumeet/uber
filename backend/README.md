@@ -32,3 +32,23 @@ Example:
   "password": "password123"
 }
 ```
+
+### Response
+
+The response will be a JSON object containing the user details and an authentication token.
+
+Example:
+
+```json
+{
+  "user": {
+    "id": "12345",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
