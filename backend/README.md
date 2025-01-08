@@ -52,3 +52,57 @@ Example:
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
 ```
+
+# User Login Endpoint
+
+## Endpoint: `/users/login`
+
+### Description
+
+This endpoint is used to log in an existing user. It validates the input data, checks the user's credentials, and returns a JSON response with the user details and an authentication token.
+
+### Method
+
+`POST`
+
+### Request Body
+
+The request body should be a JSON object with the following fields:
+
+- `email`: The user's email address (must be a valid email).
+- `password`: The user's password (minimum 6 characters).
+
+Example:
+
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+### Example Response
+
+Success Response (`200 OK`):
+
+```json
+{
+  "user": {
+    "id": "12345",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+Error Response (`401 Unauthorized`):
+
+```json
+{
+  "message": "Invalid credentials"
+}
+```
