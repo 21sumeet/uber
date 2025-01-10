@@ -106,3 +106,77 @@ Error Response (`401 Unauthorized`):
   "message": "Invalid credentials"
 }
 ```
+
+# User Profile Endpoint
+
+## Endpoint: `/users/profile`
+
+### Description
+
+This endpoint is used to get the profile of the authenticated user.
+
+### Method
+
+`GET`
+
+### Headers
+
+- `Authorization`: Bearer token
+
+### Example Response
+
+Success Response (`200 OK`):
+
+```json
+{
+  "user": {
+    "id": "12345",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+}
+```
+
+# User Logout Endpoint
+
+## Endpoint: `/users/logout`
+
+### Description
+
+This endpoint is used to log out the authenticated user. It clears the authentication token and adds it to the blacklist to prevent further use.
+
+### Method
+
+`GET`
+
+### Headers
+
+- `Authorization`: Bearer token
+
+### Example Response
+
+Success Response (`200 OK`):
+
+```json
+{
+  "message": "Logged out"
+}
+```
+
+# Token Blacklist Mechanism
+
+### Description
+
+The token blacklist mechanism is used to invalidate a user's token upon logout, ensuring that the token cannot be used for authentication after the user has logged out.
+
+### Implementation
+
+1. **User Logout Request**: When a user sends a request to log out, the `logoutUser` controller function is invoked.
+2. **Clear Cookie**: The server clears the token cookie from the user's browser using `res.clearCookie("token")`.
+3. **Extract Token**: The token is extracted from the request's cookies or authorization header.
+4. **Blacklist Token**: The extracted token is saved in the `blackListTokenModel` collection in the database.
+5. **Token Expiry**: The token in the blacklist has an expiry time (24 hours in this case), after which it will be automatically removed from the database.
+6. **Token Validation**: During subsequent requests, the server checks if the token is in the blacklist. If it is, the token is considered invalid, and the user is not authenticated.

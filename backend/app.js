@@ -6,6 +6,7 @@ const cookies = require("cookie-parser");
 
 const connectDB = require("./db/db");
 const userRoutes = require("./routes/user.routes");
+const captainRoutes = require("./routes/captain.routes");
 
 const cors = require("cors");
 app.use(cors());
@@ -15,6 +16,7 @@ app.use(cookies());
 
 connectDB();
 app.use("/users", userRoutes);
+app.use("/captains", captainRoutes);
 
 app.get("/", (req, res) => {
   res.send("hello from backend");
